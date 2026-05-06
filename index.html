@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cloud2Copier — Website Design & Development Intake</title>
+<link href="https://fonts.googleapis.com/css2?family=Saira:wght@300;400;500;600;700&family=Saira+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary:      #242834;
+    --primary-deep: #1a1e28;
+    --primary-mid:  #2e3444;
+    --primary-lite: #363d52;
+    --secondary:    #7d51fe;
+    --secondary-dim:#6340d4;
+    --accent:       #B6FF00;
+    --base:         #FFFFFF;
+    --text-mid:     #a8afc4;
+    --text-dim:     #5a6178;
+    --border:       #333848;
+    --error:        #ff5252;
+    --card-bg:      #2a3040;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--primary); color: var(--base); font-family: 'Saira', sans-serif; font-weight: 400; min-height: 100vh; overflow-x: hidden; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(125,81,254,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(125,81,254,0.03) 1px, transparent 1px); background-size: 40px 40px; pointer-events: none; z-index: 0; }
+  header { background: var(--primary-deep); border-bottom: 1px solid var(--border); padding: 1.5rem 3rem; position: relative; z-index: 10; }
+  header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--secondary), var(--accent), transparent); }
+  .header-inner { max-width: 880px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+  .bbm-logo { display: flex; align-items: center; }
+  .bbm-logo img { height: 38px; width: auto; display: block; }
+  .header-badge { text-align: right; }
+  .badge-label { font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--secondary); font-weight: 600; margin-bottom: 0.15rem; }
+  .badge-title { font-family: 'Saira Condensed', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--text-mid); letter-spacing: 0.08em; text-transform: uppercase; }
+  .hero { background: var(--primary-deep); padding: 4rem 3rem 3.5rem; position: relative; z-index: 1; overflow: hidden; }
+  .hero::before { content: ''; position: absolute; top: -80px; right: -100px; width: 550px; height: 550px; background: radial-gradient(circle, rgba(125,81,254,0.1) 0%, transparent 70%); pointer-events: none; }
+  .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--border), transparent); }
+  .hero-inner { max-width: 880px; margin: 0 auto; position: relative; }
+  .hero-tag { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(125,81,254,0.1); border: 1px solid rgba(125,81,254,0.3); padding: 0.3rem 0.85rem; border-radius: 2px; margin-bottom: 1.5rem; }
+  .hero-tag span { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--secondary); font-weight: 600; }
+  .hero-tag::before { content: ''; display: block; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: blink 2s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+  .hero h1 { font-family: 'Saira Condensed', sans-serif; font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.0; text-transform: uppercase; color: var(--base); margin-bottom: 1.25rem; letter-spacing: 0.01em; }
+  .hero h1 .hi-accent { color: var(--accent); }
+  .hero h1 .hi-purple { color: var(--secondary); }
+  .hero-desc { font-size: 0.92rem; color: var(--text-mid); line-height: 1.75; max-width: 600px; font-weight: 300; margin-bottom: 1.5rem; }
+  .time-estimate { font-size: 0.72rem; color: var(--accent); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 2rem; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .time-estimate::before { content: '⏱'; font-size: 0.85rem; }
+  .progress-wrap { display: flex; align-items: center; gap: 1rem; max-width: 560px; }
+  .progress-track { flex: 1; height: 3px; background: var(--primary-lite); border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: linear-gradient(90deg, var(--secondary), var(--accent)); width: 0%; transition: width 0.5s cubic-bezier(0.4,0,0.2,1); border-radius: 3px; }
+  .progress-text { font-size: 0.62rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); min-width: 52px; text-align: right; font-weight: 500; }
+  main { max-width: 880px; margin: 0 auto; padding: 3rem 3rem 6rem; position: relative; z-index: 1; }
+  .form-section { margin-bottom: 2.75rem; opacity: 0; transform: translateY(16px); animation: riseIn 0.45s ease forwards; }
+  @keyframes riseIn { to { opacity:1; transform:translateY(0); } }
+  .form-section:nth-child(1){animation-delay:0.08s}
+  .form-section:nth-child(2){animation-delay:0.14s}
+  .form-section:nth-child(3){animation-delay:0.20s}
+  .form-section:nth-child(4){animation-delay:0.26s}
+  .form-section:nth-child(5){animation-delay:0.32s}
+  .form-section:nth-child(6){animation-delay:0.38s}
+  .form-section:nth-child(7){animation-delay:0.44s}
+  .form-section:nth-child(8){animation-delay:0.50s}
+  .form-section:nth-child(9){animation-delay:0.56s}
+  .section-head { display: flex; align-items: flex-start; gap: 1.25rem; padding: 1.25rem 1.5rem; background: var(--card-bg); border: 1px solid var(--border); border-left: 3px solid var(--secondary); border-radius: 3px; margin-bottom: 1.5rem; }
+  .section-num { font-family: 'Saira Condensed', sans-serif; font-size: 1.8rem; font-weight: 800; color: var(--secondary); line-height: 1; opacity: 0.55; min-width: 2.2rem; padding-top: 2px; }
+  .section-title { font-family: 'Saira Condensed', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--base); margin-bottom: 0.25rem; }
+  .section-desc { font-size: 0.75rem; color: var(--text-mid); line-height: 1.6; font-weight: 300; }
+  .field { margin-bottom: 1.1rem; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  label { display: block; font-size: 0.63rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-mid); margin-bottom: 0.42rem; }
+  label .req { color: var(--accent); margin-left: 2px; }
+  label .hint { font-weight: 300; letter-spacing: 0.04em; text-transform: none; color: var(--text-dim); font-size: 0.62rem; margin-left: 0.4rem; }
+  input[type="text"], input[type="email"], input[type="tel"], input[type="url"], input[type="password"], textarea, select { width: 100%; background: var(--card-bg); border: 1px solid var(--border); color: var(--base); font-family: 'Saira', sans-serif; font-size: 0.875rem; font-weight: 400; padding: 0.78rem 1rem; outline: none; border-radius: 3px; transition: border-color 0.2s, background 0.2s, box-shadow 0.2s; appearance: none; -webkit-appearance: none; }
+  input::placeholder, textarea::placeholder { color: var(--text-dim); font-weight: 300; }
+  input:focus, textarea:focus, select:focus { border-color: var(--secondary); background: var(--primary-mid); box-shadow: 0 0 0 3px rgba(125,81,254,0.1); }
+  textarea { resize: vertical; min-height: 108px; line-height: 1.65; }
+  .select-wrap { position: relative; }
+  .select-wrap::after { content: '▾'; position: absolute; right: 1rem; top: 50%; transform: translateY(-50%); color: var(--secondary); font-size: 0.75rem; pointer-events: none; }
+  select option { background: var(--primary-mid); color: var(--base); }
+  .repeater-item { background: var(--card-bg); border: 1px solid var(--border); border-radius: 3px; padding: 1.1rem 1.25rem; margin-bottom: 0.65rem; position: relative; transition: border-color 0.2s; }
+  .repeater-item:focus-within { border-color: rgba(125,81,254,0.35); }
+  .repeater-item input { margin-bottom: 0.55rem; font-size: 0.85rem; font-weight: 500; }
+  .repeater-item textarea { min-height: 70px; font-size: 0.82rem; }
+  .repeater-label { font-size: 0.57rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 0.32rem; display: block; font-weight: 600; }
+  .check-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(205px, 1fr)); gap: 0.45rem; }
+  .check-item { display: flex; align-items: center; gap: 0.6rem; cursor: pointer; padding: 0.6rem 0.85rem; border: 1px solid var(--border); background: var(--card-bg); border-radius: 3px; transition: all 0.15s; font-size: 0.78rem; color: var(--text-mid); user-select: none; }
+  .check-item:hover { border-color: rgba(125,81,254,0.35); color: var(--base); }
+  .check-item input[type="checkbox"] { width: 15px; height: 15px; accent-color: var(--secondary); cursor: pointer; flex-shrink: 0; padding: 0; min-width: unset; }
+  .check-item:has(input:checked) { border-color: var(--secondary); background: rgba(125,81,254,0.1); color: var(--base); }
+  .help-callout { background: rgba(125,81,254,0.06); border: 1px solid rgba(125,81,254,0.2); border-left: 3px solid var(--secondary); border-radius: 3px; padding: 0.85rem 1.1rem; margin-bottom: 1rem; font-size: 0.74rem; color: var(--text-mid); line-height: 1.6; }
+  .help-callout strong { color: var(--accent); font-weight: 600; }
+  .submit-section { margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid var(--border); position: relative; }
+  .submit-section::before { content: ''; position: absolute; top: -1px; left: 0; width: 120px; height: 2px; background: linear-gradient(90deg, var(--secondary), var(--accent)); }
+  .submit-note { font-size: 0.78rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 1.75rem; max-width: 560px; font-weight: 300; }
+  .submit-note strong { color: var(--base); font-weight: 600; }
+  .submit-btn { display: inline-flex; align-items: center; gap: 1rem; background: var(--secondary); color: var(--base); border: none; padding: 1rem 2.5rem; font-family: 'Saira Condensed', sans-serif; font-size: 1rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; border-radius: 3px; transition: all 0.2s; }
+  .submit-btn:hover { background: var(--secondary-dim); transform: translateY(-2px); box-shadow: 0 10px 32px rgba(125,81,254,0.3); }
+  .submit-btn:active { transform: translateY(0); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .btn-arrow { font-size: 1rem; transition: transform 0.2s; }
+  .submit-btn:hover .btn-arrow { transform: translateX(4px); }
+  .success-screen { display: none; text-align: center; padding: 6rem 2rem; }
+  .success-screen.visible { display: block; }
+  .success-ring { width: 72px; height: 72px; border: 2px solid var(--accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; font-size: 1.6rem; color: var(--accent); animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); box-shadow: 0 0 40px rgba(182,255,0,0.2); }
+  @keyframes popIn { from{transform:scale(0.3);opacity:0} to{transform:scale(1);opacity:1} }
+  .success-screen h2 { font-family: 'Saira Condensed', sans-serif; font-size: 2.2rem; font-weight: 800; text-transform: uppercase; color: var(--base); margin-bottom: 1rem; }
+  .success-screen p { color: var(--text-mid); font-size: 0.9rem; line-height: 1.75; font-weight: 300; max-width: 460px; margin: 0 auto; }
+  footer { background: var(--primary-deep); border-top: 1px solid var(--border); padding: 1.5rem 3rem; display: flex; justify-content: space-between; align-items: center; font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.1em; text-transform: uppercase; position: relative; z-index: 1; }
+  footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, var(--secondary), transparent); opacity: 0.4; }
+  footer a { color: var(--accent); text-decoration: none; opacity: 0.75; transition: opacity 0.2s; }
+  footer a:hover { opacity: 1; }
+  .error-banner { display: none; background: rgba(255,82,82,0.1); border: 1px solid var(--error); color: var(--error); padding: 0.85rem 1.25rem; border-radius: 3px; font-size: 0.78rem; margin-bottom: 1.5rem; }
+  .error-banner.visible { display: block; }
+  @media (max-width: 680px) {
+    header, footer { padding: 1.25rem; }
+    .hero { padding: 2.5rem 1.25rem; }
+    main { padding: 2rem 1.25rem 5rem; }
+    .field-row { grid-template-columns: 1fr; }
+    .check-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="bbm-logo">
+      <img src="logo.png" alt="BlackBoxMedia">
+    </div>
+    <div class="header-badge">
+      <div class="badge-label">Client Onboarding</div>
+      <div class="badge-title">Website Design & Development</div>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag"><span>Cloud2Copier</span></div>
+    <h1>Website<br><span class="hi-purple">Design</span> <span class="hi-accent">Intake</span></h1>
+    <p class="hero-desc">Everything we need to design and develop your new WordPress website &mdash; brand direction, sitemap, services and equipment details, content readiness, and integrations. The more thorough this is, the faster we can move from kickoff to launch on the 10-day build window outlined in your proposal.</p>
+    <div class="time-estimate">Estimated time: 15–20 minutes</div>
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-text" id="progressLabel">0 / 8</div>
+    </div>
+  </div>
+</div>
+
+<main>
+  <form id="mainForm" action="https://formspree.io/f/mzdogwze" method="POST">
+    <div class="error-banner" id="errorBanner">Something went wrong. Please try again or contact your project manager.</div>
+
+    <!-- 01 BUSINESS & BILLING -->
+    <div class="form-section">
+      <div class="section-head"><div class="section-num">01</div><div><div class="section-title">Business & Billing</div><div class="section-desc">The basics for invoicing, the project agreement, and how your business will appear on the site.</div></div></div>
+      <div class="field-row">
+        <div class="field"><label>Legal Business Name <span class="req">*</span></label><input type="text" name="bizLegalName" placeholder="As it appears on invoices / registration"></div>
+        <div class="field"><label>Trading / Brand Name <span class="hint">if different</span></label><input type="text" name="bizTradingName" placeholder="e.g. Cloud2Copier"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Industry / What you do <span class="req">*</span></label><input type="text" name="bizIndustry" placeholder="e.g. Printer & copier sales, service, and managed print"></div>
+        <div class="field"><label>Year Founded</label><input type="text" name="bizYearFounded" placeholder="e.g. 2024"></div>
+      </div>
+      <div class="field"><label>Business Address <span class="req">*</span></label><input type="text" name="bizAddress" placeholder="Street, city, province, postal code"></div>
+      <div class="field-row">
+        <div class="field"><label>Service Area <span class="req">*</span></label><input type="text" name="bizServiceArea" placeholder="e.g. Edmonton & surrounding area, Greater Edmonton, AB-wide"></div>
+        <div class="field"><label>Business Hours</label><input type="text" name="bizHours" placeholder="e.g. Mon–Fri 8am–5pm MST"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Billing Email <span class="req">*</span></label><input type="email" name="billingEmail" placeholder="Where invoices should be sent"></div>
+        <div class="field"><label>GST/HST Number <span class="hint">if applicable</span></label><input type="text" name="bizGSTNumber" placeholder="9-digit business number"></div>
+      </div>
+    </div>
+
+    <!-- 02 PRIMARY CONTACT -->
+    <div class="form-section">
+      <div class="section-head"><div class="section-num">02</div><div><div class="section-title">Primary Contact</div><div class="section-desc">Who we'll be working with day-to-day on content, approvals, and revisions.</div></div></div>
+      <div class="field-row">
+        <div class="field"><label>Full Name <span class="req">*</span></label><input type="text" name="contactName" placeholder="First and last name"></div>
+        <div class="field"><label>Role / Title</label><input type="text" name="contactRole" placeholder="e.g. Owner, Operations Manager"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Email <span class="req">*</span></label><input type="email" name="contactEmail" placeholder="you@cloud2copier.com"></div>
+        <div class="field"><label>Phone <span class="req">*</span></label><input type="tel" name="contactPhone" placeholder="+1 (780) 555-0100"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Best way to reach you</label><div class="select-wrap"><select name="contactPreferred"><option value="">Select…</option><option>Email</option><option>Phone</option><option>SMS / Text</option><option>Video call</option></select></div></div>
+        <div class="field"><label>Best hours to reach you</label><input type="text" name="contactHours" placeholder="e.g. Weekdays 9–5 MST"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Are you the decision-maker?</label><div class="select-wrap"><select name="isDecisionMaker"><option value="">Select…</option><option>Yes — I approve content, design, and launch</option><option>No — someone else approves</option><option>Shared decision-making</option></select></div></div>
+        <div class="field"><label>Decision-maker name <span class="hint">if not you</span></label><input type="text" name="decisionMaker" placeholder="Name and role"></div>
+      </div>
+      <div class="field"><label>Anyone else to CC on updates and proofs?</label><input type="text" name="ccContacts" placeholder="Names + emails, separated by commas"></div>
+    </div>
+
+    <!-- 03 DOMAIN, HOSTING & EMAIL -->
+    <div class="form-section">
+      <div class="section-head"><div class="section-num">03</div><div><div class="section-title">Domain, Hosting & Email</div><div class="section-desc">Where your domain lives today, what we're migrating, and how email will be set up.</div></div></div>
+
+      <div class="help-callout">
+        <strong>About hosting —</strong> Your proposal includes <strong>first-year hosting on Black Box Media servers (ChemiCloud)</strong> with SSL, regular backups, and ongoing maintenance. We'll handle the technical setup; we just need to know where your domain is registered today and whether you have an existing site we're replacing.
+      </div>
+
+      <div class="field-row">
+        <div class="field"><label>Proposed website URL <span class="req">*</span></label><input type="url" name="proposedURL" placeholder="https://cloud2copier.com" value="https://cloud2copier.com"></div>
+        <div class="field"><label>Do you already own this domain?</label><div class="select-wrap"><select name="domainOwned"><option value="">Select…</option><option>Yes — I own it</option><option>No — need to register</option><option>I'm not sure</option></select></div></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Where is your domain registered? <span class="req">*</span></label><div class="select-wrap"><select name="domainRegistrar"><option value="">Select…</option><option>GoDaddy</option><option>Namecheap</option><option>Google Domains / Squarespace Domains</option><option>Cloudflare</option><option>Hover</option><option>Network Solutions</option><option>Bluehost</option><option>Other — list below</option><option>Not yet registered</option></select></div></div>
+        <div class="field"><label>Registrar account email</label><input type="email" name="domainEmail" placeholder="Login email for the registrar"></div>
+      </div>
+      <div class="field"><label>Other domains we should know about</label><input type="text" name="otherDomains" placeholder="Old domains, .ca variants, redirects you want preserved"></div>
+
+      <div class="field"><label>Do you have an existing website?</label>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" name="hasExistingSite" value="No website yet"> No website yet</label>
+          <label class="check-item"><input type="checkbox" name="hasExistingSite" value="Yes — replacing it"> Yes — replacing it</label>
+          <label class="check-item"><input type="checkbox" name="hasExistingSite" value="Yes — keeping content, redesigning"> Yes — keeping some content</label>
+          <label class="check-item"><input type="checkbox" name="hasExistingSite" value="Yes — temporary placeholder only"> Just a placeholder</label>
+        </div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Existing site URL <span class="hint">if any</span></label><input type="url" name="existingURL" placeholder="https://..."></div>
+        <div class="field"><label>Current host / platform <span class="hint">if known</span></label><input type="text" name="currentHost" placeholder="e.g. GoDaddy, Wix, Squarespace, WordPress.com"></div>
+      </div>
+
+      <div class="field"><label>Business email setup</label>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" name="emailSetup" value="Already have business email"> Already have business email</label>
+          <label class="check-item"><input type="checkbox" name="emailSetup" value="Need new business email setup"> Need new business email</label>
+          <label class="check-item"><input type="checkbox" name="emailSetup" value="Using Google Workspace"> Using Google Workspace</label>
+          <label class="check-item"><input type="checkbox" name="emailSetup" value="Using Microsoft 365"> Using Microsoft 365</label>
+        </div>
+      </div>
+      <div class="field"><label>Email addresses to set up <span class="hint">if new</span></label><input type="text" name="emailAddresses" placeholder="e.g. info@, sales@, service@cloud2copier.com"></div>
+    </div>
+
+    <!-- 04 BRAND & VISUAL DIRECTION -->
+    <div class="form-section">
+      <div class="section-head"><div class="section-num">04</div><div><div class="section-title">Brand & Visual Direction</div><div class="section-desc">Logo, colours, typography, and the overall feel we should be designing toward.</div></div></div>
+      <div class="field"><label>Brand assets folder <span class="hint">link</span></label><input type="url" name="assetsLink" placeholder="Google Drive, Dropbox, or shared folder URL with logo, photos, etc."></div>
+      <div class="field-row">
+        <div class="field"><label>Do you have a logo?</label><div class="select-wrap"><select name="hasLogo"><option value="">Select…</option><option>Yes — final, vector files available</option><option>Yes — PNG / JPG only, may need re-creation</option><option>No — need a logo designed (out of scope, ask BBM)</option><option>Yes — but considering an update</option></select></div></div>
+        <div class="field"><label>Tagline / slogan <span class="hint">if any</span></label><input type="text" name="tagline" placeholder="e.g. Reliable print solutions for local business"></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Brand colours <span class="hint">if known</span></label><input type="text" name="brandColours" placeholder="e.g. #1a1a1a, #007BFF, navy + white"></div>
+        <div class="field"><label>Brand fonts <span class="hint">if known</span></label><input type="text" name="brandFonts" placeholder="e.g. Inter, Montserrat, or 'open to suggestions'"></div>
+      </div>
+      <div class="field"><label>Overall vibe / feel</label>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" name="brandVibe" value="Clean & professional"> Clean & professional</label>
+          <label class="check-item"><input type="checkbox" name="brandVibe" value="Modern & tech-forward"> Modern & tech-forward</label>
+          <label class="check-item"><input type="checkbox" name="brandVibe" value="Trustworthy & corporate"> Trustworthy & corporate</label>
+          <label class="check-item"><input type="checkbox" name="brandVibe" value="Friendly & approachable"> Friendly & approachable</label>
+          <label class="check-item"><input type="checkbox" name="brandVibe" value="Bold & high-contrast"> Bold & high-contrast</label>
+          <label class="check-item"><input type="checkbox" name="brandVibe" value="Minimal & whitespace-heavy"> Minimal & whitespace-heavy</label>
+        </div>
+      </div>
+      <div class="field"><label>Tone of voice</label><textarea name="brandVoice" placeholder="e.g. Confident, helpful, no jargon. We're the print partner that picks up the phone — we say 'service' not 'support tickets.'"></textarea></div>
+      <div class="field"><label>Anything off-limits?</label><textarea name="brandAvoid" placeholder="Words, claims, comparison language, competitor names, imagery, or stock-photo styles to avoid."></textarea></div>
+    </div>
+
+    <!-- 05 SITEMAP & PAGE STRUCTURE -->
+    <div class="form-section">
+      <div class="section-head"><div class="section-num">05</div><div><div class="section-title">Sitemap & Page Structure</div><div class="section-desc">Confirming the pages outlined in your proposal and any extras you'd like considered.</div></div></div>
+
+      <div class="help-callout">
+        <strong>Proposal scope —</strong> 5–8 page custom WordPress site. Default page list from your proposal: <strong>Homepage, About, Services, Products / Equipment, Testimonials (optional), FAQ, Contact</strong>. Confirm what's in, what's out, and flag any additions (additional pages may be out of scope).
+      </div>
+
+      <div class="field"><label>Pages to include <span class="req">*</span></label>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" name="pages" value="Homepage" checked> Homepage</label>
+          <label class="check-item"><input type="checkbox" name="pages" value="About" checked> About</label>
+          <label class="check-item"><input type="checkbox" name="pages" value="Services" checked> Services</label>
+          <label class="check-item"><input type="checkbox" name="pages" value="Products / Equipment" checked> Products / Equipment</label>
+          <label class="check-item"><input type="checkbox" name="pages" value="Testimonials"> Testimonials</label>
+          <label class="check-item"><input type="checkbox" name="pages" value="FAQ" checked> FAQ</label>
+          <label class="check-item"><input type="checkbox" name="pages" value="Contact" checked> Contact</label>
+          <label class="check-item"><input type="checkbox" name="pages" value="Service Areas"> Service Areas</label>
+          <label class="check-item"><input type="checkbox" name="pages" value="Blog / News"> Blog / News</label>
+          <label class="check-item"><input type="checkbox" name="pages" value="Privacy Policy"> Privacy Policy</label>
+        </div>
+      </div>
+      <div class="field"><label>Additional pages requested <span class="hint">may be out-of-scope</span></label><textarea name="extraPages" placeholder="List any pages beyond the 5–8 in your proposal. We'll confirm scope before adding."></textarea></div>
+      <div class="field"><label>Primary call-to-action <span class="req">*</span></label>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" name="primaryCTA" value="Request a quote"> Request a quote</label>
+          <label class="check-item"><input type="checkbox" name="primaryCTA" value="Book a service call"> Book a service call</label>
+          <label class="check-item"><input type="checkbox" name="primaryCTA" value="Order supplies"> Order supplies</label>
+          <label class="check-item"><input type="checkbox" name="primaryCTA" value="Call us"> Call us</label>
+          <label class="check-item"><input type="checkbox" name="primaryCTA" value="Schedule consultation"> Schedule consultation</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 SERVICES, PRODUCTS & FUNCTIONALITY -->
+    <div class="form-section">
+      <div class="section-head"><div class="section-num">06</div><div><div class="section-title">Services, Products & Functionality</div><div class="section-desc">What we'll feature on Services and Products / Equipment pages, plus any forms or integrations.</div></div></div>
+
+      <div class="field"><label>Services to feature <span class="req">*</span></label>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" name="services" value="Printer & copier sales"> Printer & copier sales</label>
+          <label class="check-item"><input type="checkbox" name="services" value="Repairs & servicing"> Repairs & servicing</label>
+          <label class="check-item"><input type="checkbox" name="services" value="Supply replenishment"> Supply replenishment</label>
+          <label class="check-item"><input type="checkbox" name="services" value="Maintenance contracts"> Maintenance contracts</label>
+          <label class="check-item"><input type="checkbox" name="services" value="Managed print services"> Managed print services</label>
+          <label class="check-item"><input type="checkbox" name="services" value="Equipment leasing"> Equipment leasing</label>
+          <label class="check-item"><input type="checkbox" name="services" value="On-site setup & install"> On-site setup & install</label>
+          <label class="check-item"><input type="checkbox" name="services" value="Network / IT integration"> Network / IT integration</label>
+        </div>
+      </div>
+      <div class="field"><label>Brands you carry / sell <span class="hint">if applicable</span></label><textarea name="brandsCarried" placeholder="e.g. Canon, Xerox, HP, Brother, Konica Minolta, Ricoh, Sharp, Lexmark…"></textarea></div>
+      <div class="field"><label>Equipment categories to organize Products page around</label>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" name="equipmentCategories" value="Small office (1–10 users)"> Small office (1–10)</label>
+          <label class="check-item"><input type="checkbox" name="equipmentCategories" value="Mid-size business (10–50)"> Mid-size (10–50)</label>
+          <label class="check-item"><input type="checkbox" name="equipmentCategories" value="Enterprise / high-volume"> Enterprise / high-volume</label>
+          <label class="check-item"><input type="checkbox" name="equipmentCategories" value="Multi-function printers (MFP)"> Multi-function (MFP)</label>
+          <label class="check-item"><input type="checkbox" name="equipmentCategories" value="Production print"> Production print</label>
+          <label class="check-item"><input type="checkbox" name="equipmentCategories" value="Wide-format / plotters"> Wide-format / plotters</label>
+          <label class="check-item"><input type="checkbox" name="equipmentCategories" value="Refurbished / used"> Refurbished / used</label>
+          <label class="check-item"><input type="checkbox" name="equipmentCategories" value="Toner & supplies"> Toner & supplies</label>
+        </div>
+      </div>
+      <div class="field"><label>Specific products to showcase <span class="hint">model names if you have them</span></label><textarea name="productsShowcase" placeholder="List models, photos available, or 'we'll provide a product list'."></textarea></div>
+
+      <div class="field"><label>Forms & functionality needed <span class="req">*</span></label>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" name="functionality" value="General contact form" checked> Contact form</label>
+          <label class="check-item"><input type="checkbox" name="functionality" value="Quote request form" checked> Quote request form</label>
+          <label class="check-item"><input type="checkbox" name="functionality" value="Service call / repair request"> Service call request</label>
+          <label class="check-item"><input type="checkbox" name="functionality" value="Supply re-order form"> Supply re-order form</label>
+          <label class="check-item"><input type="checkbox" name="functionality" value="Newsletter signup"> Newsletter signup</label>
+          <label class="check-item"><input type="checkbox" name="functionality" value="Live chat widget"> Live chat widget</label>
+          <label class="check-item"><input type="checkbox" name="functionality" value="Click-to-call buttons"> Click-to-call buttons</label>
+          <label class="check-item"><input type="checkbox" name="functionality" value="Google Maps embed"> Google Maps embed</label>
+          <label class="check-item"><input type="checkbox" name="functionality" value="Online booking / scheduling"> Online booking</label>
+          <label class="check-item"><input type="checkbox" name="functionality" value="Customer login portal"> Customer portal</label>
+        </div>
+      </div>
+      <div class="field"><label>Where should form submissions be sent? <span class="req">*</span></label><input type="email" name="formNotificationEmail" placeholder="e.g. info@cloud2copier.com — separate multiple with commas"></div>
+      <div class="field"><label>Third-party integrations <span class="hint">if any</span></label><textarea name="integrations" placeholder="CRM (HubSpot, Salesforce), email marketing (Mailchimp, Constant Contact), accounting, scheduling tools, etc."></textarea></div>
+    </div>
+
+    <!-- 07 CONTENT, ASSETS & INSPIRATION -->
+    <div class="form-section">
+      <div class="section-head"><div class="section-num">07</div><div><div class="section-title">Content, Assets & Inspiration</div><div class="section-desc">What you'll provide, what we'll write, and the look-and-feel references that resonate with you.</div></div></div>
+
+      <div class="help-callout">
+        <strong>About content —</strong> Your proposal includes <strong>collaborative content creation</strong>. The more raw material you provide (existing copy, brochures, product specs, photos), the more accurately we can capture your voice. We'll polish, structure, and SEO-optimize what you give us.
+      </div>
+
+      <div class="field"><label>Content readiness</label>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" name="contentReady" value="Final copy ready to drop in"> Copy ready to drop in</label>
+          <label class="check-item"><input type="checkbox" name="contentReady" value="Rough draft / bullet points"> Rough draft / notes</label>
+          <label class="check-item"><input type="checkbox" name="contentReady" value="Need BBM to write from interview"> Need BBM to write</label>
+          <label class="check-item"><input type="checkbox" name="contentReady" value="Mix — some pages ready, some not"> Mix — varies by page</label>
+        </div>
+      </div>
+      <div class="field"><label>Existing brochures, spec sheets, or content links</label><textarea name="existingContent" placeholder="Paste links to PDFs, Google Docs, old website pages we can pull from."></textarea></div>
+      <div class="field"><label>Photography</label>
+        <div class="check-grid">
+          <label class="check-item"><input type="checkbox" name="photography" value="Have professional photos"> Have pro photos</label>
+          <label class="check-item"><input type="checkbox" name="photography" value="Have phone / amateur photos"> Have phone photos</label>
+          <label class="check-item"><input type="checkbox" name="photography" value="Need stock imagery"> Need stock imagery</label>
+          <label class="check-item"><input type="checkbox" name="photography" value="Manufacturer product images only"> Manufacturer images only</label>
+          <label class="check-item"><input type="checkbox" name="photography" value="Want to schedule a photo shoot"> Want a photo shoot (out of scope)</label>
+        </div>
+      </div>
+
+      <div class="repeater-item">
+        <span class="repeater-label">Example #1 — Website you like (look, layout, or feel)</span>
+        <div class="field"><label>URL</label><input type="url" name="likedSite1URL" placeholder="https://..."></div>
+        <div class="field"><label>What you like about it</label><textarea name="likedSite1Notes" placeholder="e.g. 'Clean hero section, prominent quote button, easy to scan services.'"></textarea></div>
+      </div>
+      <div class="repeater-item">
+        <span class="repeater-label">Example #2 — Website you like</span>
+        <div class="field"><label>URL</label><input type="url" name="likedSite2URL" placeholder="https://..."></div>
+        <div class="field"><label>What you like about it</label><textarea name="likedSite2Notes" placeholder="What stands out — design, structure, tone, photography…"></textarea></div>
+      </div>
+      <div class="repeater-item">
+        <span class="repeater-label">Example #3 — Website you like (optional)</span>
+        <div class="field"><label>URL</label><input type="url" name="likedSite3URL" placeholder="https://..."></div>
+        <div class="field"><label>What you like about it</label><textarea name="likedSite3Notes" placeholder="What stands out…"></textarea></div>
+      </div>
+      <div class="field"><label>Websites you <em>don't</em> like</label><textarea name="dislikedSites" placeholder="URLs + a quick note on what to avoid (cluttered layouts, dated styling, hard navigation, etc.)."></textarea></div>
+      <div class="field"><label>Top 3 competitors <span class="hint">name + website</span></label><textarea name="competitors" placeholder="Helps us with positioning, keyword research, and making sure we don't blend in with them."></textarea></div>
+    </div>
+
+    <!-- 08 SEO, ACCOUNT ACCESS & FINAL NOTES -->
+    <div class="form-section">
+      <div class="section-head"><div class="section-num">08</div><div><div class="section-title">SEO, Account Access & Authorization</div><div class="section-desc">Search visibility, the accounts we'll need access to, and final sign-off.</div></div></div>
+
+      <div class="help-callout">
+        <strong>How we handle access —</strong> We never collect passwords through this form. For Google Analytics, Search Console, and Google Business Profile, we'll send you manager invitations so you keep full control and can revoke access anytime. For your domain registrar and any platforms requiring a password handoff, we'll coordinate via a secure channel (1Password, Bitwarden, or a one-time encrypted link) separately.
+      </div>
+
+      <div class="field-row">
+        <div class="field"><label>Ideal customer <span class="req">*</span></label><textarea name="idealCustomer" placeholder="Office managers, small biz owners, dental clinics, law firms, etc. What kind of business buys from you?"></textarea></div>
+        <div class="field"><label>Target keywords / search phrases</label><textarea name="targetKeywords" placeholder="e.g. 'copier rental Edmonton', 'managed print services AB', 'office printer repair'"></textarea></div>
+      </div>
+
+      <div class="repeater-item">
+        <span class="repeater-label">Google Account &mdash; Analytics, Search Console, Tag Manager</span>
+        <div class="field-row">
+          <div class="field"><label>Account email</label><input type="email" name="googleEmail" placeholder="account@gmail.com"></div>
+          <div class="field"><label>Status</label><div class="select-wrap"><select name="googleStatus"><option value="">Select…</option><option>Set up — invite welcome</option><option>Account exists, no Analytics yet</option><option>No Google account — need to create</option></select></div></div>
+        </div>
+      </div>
+      <div class="repeater-item">
+        <span class="repeater-label">Google Business Profile</span>
+        <div class="field-row">
+          <div class="field"><label>Profile status</label><div class="select-wrap"><select name="gmbStatus"><option value="">Select…</option><option>Claimed and active</option><option>Profile exists, not claimed</option><option>No profile yet — need help setting up</option></select></div></div>
+          <div class="field"><label>Profile email <span class="hint">if different</span></label><input type="email" name="gmbEmail" placeholder="account@gmail.com"></div>
+        </div>
+      </div>
+      <div class="repeater-item">
+        <span class="repeater-label">Social media handles to link</span>
+        <div class="field-row">
+          <div class="field"><label>Facebook</label><input type="url" name="socialFB" placeholder="https://facebook.com/..."></div>
+          <div class="field"><label>Instagram</label><input type="url" name="socialIG" placeholder="https://instagram.com/..."></div>
+        </div>
+        <div class="field-row">
+          <div class="field"><label>LinkedIn</label><input type="url" name="socialLI" placeholder="https://linkedin.com/company/..."></div>
+          <div class="field"><label>Other</label><input type="text" name="socialOther" placeholder="X / TikTok / YouTube"></div>
+        </div>
+      </div>
+      <div class="field"><label>Other accounts we may need access to</label><textarea name="otherAccounts" placeholder="Existing host login (if migrating), email host, CRM, anything else relevant. Just list the platforms — we'll coordinate access separately."></textarea></div>
+
+      <div class="field-row">
+        <div class="field"><label>Privacy Policy URL <span class="hint">if existing</span></label><input type="url" name="privacyPolicy" placeholder="https://..."></div>
+        <div class="field"><label>Need privacy policy drafted?</label><div class="select-wrap"><select name="needPrivacy"><option value="">Select…</option><option>Have one — will provide</option><option>Need a basic template added</option><option>Not sure — discuss with BBM</option></select></div></div>
+      </div>
+
+      <div class="field"><label>Launch readiness <span class="hint">10-day window from deposit per proposal</span></label><div class="select-wrap"><select name="launchReadiness"><option value="">Select…</option><option>Ready to start now — content/assets in hand</option><option>Ready in 1 week</option><option>Ready in 2 weeks</option><option>Need a kickoff call to plan</option></select></div></div>
+
+      <div class="field"><label>Anything else we should know</label><textarea name="additionalNotes" placeholder="Concerns, deadlines, internal politics, accessibility requirements, regulatory considerations, anything that doesn't fit anywhere else." style="min-height:120px;"></textarea></div>
+
+      <div class="help-callout" style="margin-top: 1.5rem;">
+        <label class="check-item" style="border: none; background: none; padding: 0;">
+          <input type="checkbox" name="authorization" value="Yes">
+          <span><strong style="color: var(--base);">Authorization <span class="req">*</span></strong> — I authorize BlackBoxMedia to design, develop, host, and maintain the Cloud2Copier website, request manager-level access to the necessary platforms, and proceed with the agreed scope of work outlined in the signed proposal (Ref: SYDVN-A68YC-7SA2G-LTTZG).</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="submit-section">
+      <p class="submit-note">Once submitted, we'll review everything and reach out within one business day to confirm next steps. <strong>You'll receive manager-access invitations for each platform — accept them at your convenience and we're good to start the 10-day build.</strong> Welcome aboard.</p>
+      <button type="submit" class="submit-btn" id="submitBtn">Submit Questionnaire <span class="btn-arrow">→</span></button>
+    </div>
+  </form>
+
+  <div class="success-screen" id="successScreen">
+    <div class="success-ring">✓</div>
+    <h2>Received — Welcome Aboard</h2>
+    <p>We've got your details. Expect a coordination message within one business day to confirm next steps and walk through any access requests we need from you. The 10-day build clock starts once content and access are in place.</p>
+  </div>
+</main>
+
+<footer>
+  <span>© 2026 BlackBoxMedia — Design. Development. Marketing. <span style="color: var(--accent);">AI Systems.</span></span>
+  <a href="https://blackboxmedia.ca" target="_blank">blackboxmedia.ca</a>
+</footer>
+
+<script>
+  function updateProgress() {
+    var sections = document.querySelectorAll('.form-section');
+    var filled = 0;
+    sections.forEach(function(s) {
+      var inputs = s.querySelectorAll('input:not([type="checkbox"]):not([type="radio"]), textarea, select');
+      var checks = s.querySelectorAll('input[type="checkbox"]:checked, input[type="radio"]:checked');
+      var has = checks.length > 0;
+      inputs.forEach(function(i) { if (i.value.trim()) has = true; });
+      if (has) filled++;
+    });
+    var pct = Math.round((filled / sections.length) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressLabel').textContent = filled + ' / ' + sections.length;
+  }
+  document.querySelectorAll('input, textarea, select').forEach(function(el) {
+    el.addEventListener('input', updateProgress);
+    el.addEventListener('change', updateProgress);
+  });
+  updateProgress();
+
+  document.getElementById('mainForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var btn = document.getElementById('submitBtn');
+    btn.innerHTML = 'Submitting… <span class="btn-arrow">↻</span>';
+    btn.disabled = true;
+
+    var formData = new FormData(this);
+    fetch(this.action, {
+      method: 'POST',
+      body: formData,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(function(response) {
+      if (response.ok) {
+        document.getElementById('mainForm').style.display = 'none';
+        document.getElementById('successScreen').classList.add('visible');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        document.getElementById('errorBanner').classList.add('visible');
+        btn.innerHTML = 'Submit Questionnaire <span class="btn-arrow">→</span>';
+        btn.disabled = false;
+      }
+    })
+    .catch(function() {
+      document.getElementById('errorBanner').classList.add('visible');
+      btn.innerHTML = 'Submit Questionnaire <span class="btn-arrow">→</span>';
+      btn.disabled = false;
+    });
+  });
+</script>
+</body>
+</html>
